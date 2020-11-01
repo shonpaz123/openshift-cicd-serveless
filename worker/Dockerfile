@@ -20,7 +20,7 @@ COPY --from=builder /usr/src/app/worker.py ./
 RUN ["/docker-entrypoint.sh", "pylint"]
 
 # Phase III - Final Image 
-FROM python:3.8-slim as serve
+FROM python:alpine as serve
 WORKDIR /usr/src/app
 # Copy all packages instead of rerunning pip install
 COPY --from=builder /wheels /wheels
