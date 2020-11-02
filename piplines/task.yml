@@ -39,7 +39,7 @@ spec:
       args:
         - "apply"
         - "-f"
-        - "$(resources.inputs.dockercoins-git.path)/$(params.pathToContext)/$(inputs.params.pathToYamlFile)"
+        - "$(params.pathToContext)/$(inputs.params.pathToYamlFile)"
 ---
 apiVersion: tekton.dev/v1beta1
 kind: Task
