@@ -39,7 +39,7 @@ spec:
       args:
         - "apply"
         - "-f"
-        - "$(params.pathToContext)/$(inputs.params.pathToYamlFile)"
+        - "$(inputs.params.pathToYamlFile)"
 ---
 apiVersion: tekton.dev/v1beta1
 kind: Task
