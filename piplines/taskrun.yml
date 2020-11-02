@@ -1,0 +1,71 @@
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  name: build-rng-run
+spec:
+  serviceAccountName: dockercoins
+  taskRef:
+    name: build-rng
+  resources:
+    inputs:
+      - name: dockercoins-git
+        resourceRef:
+          name: dockercoins-git
+    outputs:
+      - name: rng-image
+        resourceRef:
+          name: rng-image
+---
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  name: build-worker-run
+spec:
+  serviceAccountName: dockercoins
+  taskRef:
+    name: build-worker
+  resources:
+    inputs:
+      - name: dockercoins-git
+        resourceRef:
+          name: dockercoins-git
+    outputs:
+      - name: worker-image
+        resourceRef:
+          name: worker-image
+---
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  name: build-webui-run
+spec:
+  serviceAccountName: dockercoins
+  taskRef:
+    name: build-webui
+  resources:
+    inputs:
+      - name: dockercoins-git
+        resourceRef:
+          name: dockercoins-git
+    outputs:
+      - name: webui-image
+        resourceRef:
+          name: webui-image
+---
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  name: build-hasher-run
+spec:
+  serviceAccountName: dockercoins
+  taskRef:
+    name: build-hasher
+  resources:
+    inputs:
+      - name: dockercoins-git
+        resourceRef:
+          name: dockercoins-git
+    outputs:
+      - name: hasher-image
+        resourceRef:
+          name: hasher-image

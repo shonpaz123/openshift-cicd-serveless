@@ -1,0 +1,64 @@
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+  name: dockercoins-git
+spec:
+  type: git
+  params:
+    # This parameter represents the git url, so as the revision which is the used branch
+    - name: url
+      value: https://github.com/shonpaz123/openshift-cicd-serveless.git
+    - name: revision
+      value: main
+---
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+  name: rng-image
+spec:
+  type: image
+  params:
+    # This parameter represents the output image for the rng microservice
+    - name: url
+      value: image-registry.openshift-image-registry.svc:5000/default/rng:latest
+    - name: insecure 
+      value: "true"
+---
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+  name: worker-image
+spec:
+  type: image
+  params:
+    # This parameter represents the output image for the worker microservice
+    - name: url
+      value: image-registry.openshift-image-registry.svc:5000/default/worker:latest
+    - name: insecure 
+      value: "true"
+---
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+  name: webui-image
+spec:
+  type: image
+  params:
+    # This parameter represents the output image for the webui microservice
+    - name: url
+      value: image-registry.openshift-image-registry.svc:5000/default/webui:latest
+    - name: insecure 
+      value: "true"
+---
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+  name: hasher-image
+spec:
+  type: image
+  params:
+    # This parameter represents the output image for the hasher microservice
+    - name: url
+      value: image-registry.openshift-image-registry.svc:5000/default/hasher:latest
+    - name: insecure 
+      value: "true"

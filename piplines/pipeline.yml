@@ -1,0 +1,24 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: dockercoins-cicd
+spec:
+  resources:
+    - name: dockercoins-git
+      type: git
+    - name: dockercoins-image
+      type: image
+  tasks:
+    - name: dockercoins-build
+      taskRef:
+        name: buildah 
+      resources:
+        inputs: 
+            - name: source
+              resource: dockercoins-git
+        outputs:
+            - name: image 
+              resource: dockercoins-image
+      params:
+          - name: TLSVERIFY
+            value: "false"

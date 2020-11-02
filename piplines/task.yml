@@ -1,0 +1,138 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: build-rng
+spec:
+  params:
+    - name: pathToDockerFile
+      type: string
+      description: The path to the dockerfile to build
+      default: Dockerfile
+    - name: pathToContext
+      type: string
+      description: The path to the dockerfile to build
+      default: $(resources.inputs.dockercoins-git.path)/rng
+    - name: pathToYamlFile
+      type: string
+      description: The path to the dockerfile to build
+      default: $(resources.inputs.dockercoins-git.path)/rng/deploy.yml
+  resources:
+    inputs:
+        - name: dockercoins-git
+          type: git
+    outputs:
+        - name: rng-image
+          type: image
+  steps:
+    - name: build-and-push
+      image: gcr.io/kaniko-project/executor:v0.16.0
+      command:
+        - /kaniko/executor
+      args:
+        - --dockerfile=$(params.pathToDockerFile)
+        - --destination=$(resources.outputs.rng-image.url)
+        - --context=$(params.pathToContext)
+        - --skip-tls-verify=true
+    - name: deploy
+      image: lachlanevenson/k8s-kubectl
+      command: ["kubectl"]
+      args:
+        - "apply"
+        - "-f"
+        - "$(resources.inputs.dockercoins-git.path)/$(params.pathToContext)/$(inputs.params.pathToYamlFile)"
+---
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: build-worker
+spec:
+  params:
+    - name: pathToDockerFile
+      type: string
+      description: The path to the dockerfile to build
+      default: Dockerfile
+    - name: pathToContext
+      type: string
+      description: The path to the dockerfile to build
+      default: $(resources.inputs.dockercoins-git.path)/worker
+  resources:
+    inputs:
+        - name: dockercoins-git
+          type: git
+    outputs:
+        - name: worker-image
+          type: image
+  steps:
+    - name: build-and-push
+      image: gcr.io/kaniko-project/executor:v0.16.0
+      command:
+        - /kaniko/executor
+      args:
+        - --dockerfile=$(params.pathToDockerFile)
+        - --destination=$(resources.outputs.worker-image.url)
+        - --context=$(params.pathToContext)
+        - --skip-tls-verify=true
+---
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: build-webui
+spec:
+  params:
+    - name: pathToDockerFile
+      type: string
+      description: The path to the dockerfile to build
+      default: Dockerfile
+    - name: pathToContext
+      type: string
+      description: The path to the dockerfile to build
+      default: $(resources.inputs.dockercoins-git.path)/webui
+  resources:
+    inputs:
+        - name: dockercoins-git
+          type: git
+    outputs:
+        - name: webui-image
+          type: image
+  steps:
+    - name: build-and-push
+      image: gcr.io/kaniko-project/executor:v0.16.0
+      command:
+        - /kaniko/executor
+      args:
+        - --dockerfile=$(params.pathToDockerFile)
+        - --destination=$(resources.outputs.webui-image.url)
+        - --context=$(params.pathToContext)
+        - --skip-tls-verify=true
+---
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: build-hasher
+spec:
+  params:
+    - name: pathToDockerFile
+      type: string
+      description: The path to the dockerfile to build
+      default: Dockerfile
+    - name: pathToContext
+      type: string
+      description: The path to the dockerfile to build
+      default: $(resources.inputs.dockercoins-git.path)/hasher
+  resources:
+    inputs:
+        - name: dockercoins-git
+          type: git
+    outputs:
+        - name: hasher-image
+          type: image
+  steps:
+    - name: build-and-push
+      image: gcr.io/kaniko-project/executor:v0.16.0
+      command:
+        - /kaniko/executor
+      args:
+        - --dockerfile=$(params.pathToDockerFile)
+        - --destination=$(resources.outputs.hasher-image.url)
+        - --context=$(params.pathToContext)
+        - --skip-tls-verify=true
