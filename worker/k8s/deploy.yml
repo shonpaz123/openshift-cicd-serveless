@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worker
+spec:
+  selector:
+    matchLabels:
+      app: worker
+  template:
+    metadata:
+      labels:
+        app: webui
+    spec:
+      containers:
+      - name: worker
+        image: image-registry.openshift-image-registry.svc:5000/default/worker:latest
+        ports:
+        - containerPort: 80
+

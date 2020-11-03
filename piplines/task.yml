@@ -55,6 +55,10 @@ spec:
       type: string
       description: The path to the dockerfile to build
       default: $(resources.inputs.dockercoins-git.path)/worker
+    - name: pathToYamlFile
+      type: string
+      description: The path to the dockerfile to build
+      default: $(resources.inputs.dockercoins-git.path)/worker/k8s/deploy.yml
   resources:
     inputs:
         - name: dockercoins-git
@@ -72,6 +76,13 @@ spec:
         - --destination=$(resources.outputs.worker-image.url)
         - --context=$(params.pathToContext)
         - --skip-tls-verify=true
+    - name: deploy
+      image: lachlanevenson/k8s-kubectl
+      command: ["kubectl"]
+      args:
+        - "apply"
+        - "-f"
+        - "$(inputs.params.pathToYamlFile)"
 ---
 apiVersion: tekton.dev/v1beta1
 kind: Task
@@ -87,6 +98,10 @@ spec:
       type: string
       description: The path to the dockerfile to build
       default: $(resources.inputs.dockercoins-git.path)/webui
+    - name: pathToYamlFile
+      type: string
+      description: The path to the dockerfile to build
+      default: $(resources.inputs.dockercoins-git.path)/webui/k8s/deploy.yml
   resources:
     inputs:
         - name: dockercoins-git
@@ -104,6 +119,13 @@ spec:
         - --destination=$(resources.outputs.webui-image.url)
         - --context=$(params.pathToContext)
         - --skip-tls-verify=true
+    - name: deploy
+      image: lachlanevenson/k8s-kubectl
+      command: ["kubectl"]
+      args:
+        - "apply"
+        - "-f"
+        - "$(inputs.params.pathToYamlFile)"
 ---
 apiVersion: tekton.dev/v1beta1
 kind: Task
@@ -119,6 +141,10 @@ spec:
       type: string
       description: The path to the dockerfile to build
       default: $(resources.inputs.dockercoins-git.path)/hasher
+    - name: pathToYamlFile
+      type: string
+      description: The path to the dockerfile to build
+      default: $(resources.inputs.dockercoins-git.path)/hasher/k8s/deploy.yml
   resources:
     inputs:
         - name: dockercoins-git
@@ -136,3 +162,44 @@ spec:
         - --destination=$(resources.outputs.hasher-image.url)
         - --context=$(params.pathToContext)
         - --skip-tls-verify=true
+    - name: deploy
+      image: lachlanevenson/k8s-kubectl
+      command: ["kubectl"]
+      args:
+        - "apply"
+        - "-f"
+        - "$(inputs.params.pathToYamlFile)"
+---
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: deploy-redis
+spec:
+  params:
+    - name: pathToDockerFile
+      type: string
+      description: The path to the dockerfile to build
+      default: Dockerfile
+    - name: pathToContext
+      type: string
+      description: The path to the dockerfile to build
+      default: $(resources.inputs.dockercoins-git.path)/redis
+    - name: pathToYamlFile
+      type: string
+      description: The path to the dockerfile to build
+      default: $(resources.inputs.dockercoins-git.path)/redis/k8s/deploy.yml
+  resources:
+    inputs:
+        - name: dockercoins-git
+          type: git
+    outputs:
+        - name: hasher-image
+          type: image
+  steps:
+    - name: deploy
+      image: lachlanevenson/k8s-kubectl
+      command: ["kubectl"]
+      args:
+        - "apply"
+        - "-f"
+        - "$(inputs.params.pathToYamlFile)"
