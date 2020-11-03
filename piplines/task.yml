@@ -15,7 +15,7 @@ spec:
     - name: pathToYamlFile
       type: string
       description: The path to the dockerfile to build
-      default: $(resources.inputs.dockercoins-git.path)/rng/deploy.yml
+      default: $(resources.inputs.dockercoins-git.path)/rng/k8s
   resources:
     inputs:
         - name: dockercoins-git
@@ -38,8 +38,8 @@ spec:
       command: ["/bin/bash", "-c"]
       args:
         - |-
-          echo Applying manifests
-          "apply -f $(inputs.params.pathToYamlFile)"
+          echo Applying manifests in $(inputs.params.pathToYamlFile) directory
+          "oc apply -f $(inputs.params.pathToYamlFile)"
           echo -----------------------------------
 ---
 apiVersion: tekton.dev/v1beta1
