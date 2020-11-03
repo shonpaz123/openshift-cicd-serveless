@@ -15,7 +15,7 @@ spec:
     - name: pathToYamlFile
       type: string
       description: The path to the dockerfile to build
-      default: $(resources.inputs.dockercoins-git.path)/rng/k8s
+      default: $(resources.inputs.dockercoins-git.path)/rng/k8s/deploy.yml
   resources:
     inputs:
         - name: dockercoins-git
@@ -34,13 +34,12 @@ spec:
         - --context=$(params.pathToContext)
         - --skip-tls-verify=true
     - name: deploy
-      image: quay.io/openshift/origin-cli:latest
-      command: ["/bin/bash", "-c"]
+      image: lachlanevenson/k8s-kubectl
+      command: ["kubectl"]
       args:
-        - |-
-          echo Applying manifests in $(inputs.params.pathToYamlFile) directory
-          "git clone https://github.com/shonpaz123/openshift-cicd-serveless.git; cd openshift-cicd-serveless.git; oc apply -f ./rng/k8s/"
-          echo -----------------------------------
+        - "apply"
+        - "-f"
+        - "$(inputs.params.pathToYamlFile)"
 ---
 apiVersion: tekton.dev/v1beta1
 kind: Task
