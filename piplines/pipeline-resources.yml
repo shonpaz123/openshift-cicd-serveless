@@ -20,7 +20,7 @@ spec:
   params:
     # This parameter represents the output image for the rng microservice
     - name: url
-      value: image-registry.openshift-image-registry.svc:5000/default/rng:latest
+      value: image-registry.openshift-image-registry.svc:5000/dockercoins/rng:latest
     - name: insecure 
       value: "true"
 ---
@@ -33,7 +33,7 @@ spec:
   params:
     # This parameter represents the output image for the worker microservice
     - name: url
-      value: image-registry.openshift-image-registry.svc:5000/default/worker:latest
+      value: image-registry.openshift-image-registry.svc:5000/dockercoins/worker:latest
     - name: insecure 
       value: "true"
 ---
@@ -46,7 +46,7 @@ spec:
   params:
     # This parameter represents the output image for the webui microservice
     - name: url
-      value: image-registry.openshift-image-registry.svc:5000/default/webui:latest
+      value: image-registry.openshift-image-registry.svc:5000/dockercoins/webui:latest
     - name: insecure 
       value: "true"
 ---
@@ -59,7 +59,7 @@ spec:
   params:
     # This parameter represents the output image for the hasher microservice
     - name: url
-      value: image-registry.openshift-image-registry.svc:5000/default/hasher:latest
+      value: image-registry.openshift-image-registry.svc:5000/dockercoins/hasher:latest
     - name: insecure 
       value: "true"
 ---
@@ -72,6 +72,6 @@ spec:
   params:
     # This parameter represents the output image for the hasher microservice
     - name: url
-      value: image-registry.openshift-image-registry.svc:5000/default/redis:latest
+      value: image-registry.openshift-image-registry.svc:5000/dockercoins/redis:latest
     - name: insecure 
       value: "true"
