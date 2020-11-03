@@ -15,7 +15,7 @@ spec:
       - name: rng
         image: image-registry.openshift-image-registry.svc:5000/dockercoins/webui:latest
         ports:
-        - containerPort: 80
+        - containerPort: 8000
 ---
 apiVersion: v1
 kind: Service
@@ -26,4 +26,4 @@ spec:
     app: webui
   ports:
   - port: 80
-    targetPort: 80
+    targetPort: 8000
