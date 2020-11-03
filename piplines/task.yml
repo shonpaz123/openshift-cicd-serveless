@@ -39,7 +39,7 @@ spec:
       args:
         - |-
           echo Applying manifests in $(inputs.params.pathToYamlFile) directory
-          "git clone https://github.com/shonpaz123/openshift-cicd-serveless.git; cd openshift-cicd-serveless.git; oc apply -f $(inputs.params.pathToYamlFile)"
+          "git clone https://github.com/shonpaz123/openshift-cicd-serveless.git; cd openshift-cicd-serveless.git; oc apply -f ./rng/k8s/"
           echo -----------------------------------
 ---
 apiVersion: tekton.dev/v1beta1
