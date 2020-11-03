@@ -62,3 +62,16 @@ spec:
       value: image-registry.openshift-image-registry.svc:5000/default/hasher:latest
     - name: insecure 
       value: "true"
+---
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+  name: redis-image
+spec:
+  type: image
+  params:
+    # This parameter represents the output image for the hasher microservice
+    - name: url
+      value: image-registry.openshift-image-registry.svc:5000/default/redis:latest
+    - name: insecure 
+      value: "true"
