@@ -34,12 +34,13 @@ spec:
         - --context=$(params.pathToContext)
         - --skip-tls-verify=true
     - name: deploy
-      image: lachlanevenson/k8s-kubectl
-      command: ["kubectl"]
+      image: quay.io/openshift/origin-cli:latest
+      command: ["/bin/bash", "-c"]
       args:
-        - "apply"
-        - "-f"
-        - "$(inputs.params.pathToYamlFile)"
+        - |-
+          echo Applying manifests
+          "apply -f $(inputs.params.pathToYamlFile)"
+          echo -----------------------------------
 ---
 apiVersion: tekton.dev/v1beta1
 kind: Task
