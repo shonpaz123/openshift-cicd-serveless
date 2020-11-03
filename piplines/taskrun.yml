@@ -69,3 +69,17 @@ spec:
       - name: hasher-image
         resourceRef:
           name: hasher-image
+---
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  name: deploy-redis
+spec:
+  serviceAccountName: dockercoins
+  taskRef:
+    name: deploy-redis
+  resources:
+    inputs:
+      - name: dockercoins-git
+        resourceRef:
+          name: dockercoins-git

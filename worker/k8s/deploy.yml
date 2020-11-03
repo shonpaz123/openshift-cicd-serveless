@@ -9,7 +9,7 @@ spec:
   template:
     metadata:
       labels:
-        app: webui
+        app: worker
     spec:
       containers:
       - name: worker
