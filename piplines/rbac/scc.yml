@@ -1,0 +1,10 @@
+apiVersion: security.openshift.io/v1
+kind: SecurityContextConstraints
+metadata:
+  name: scc-dockercoins
+runAsUser: 
+  type: RunAsAny
+seLinuxContext: 
+  type: RunAsAny
+users:
+- "system:serviceaccount:dockercoins:dockercoins"

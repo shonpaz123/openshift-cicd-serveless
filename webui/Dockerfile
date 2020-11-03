@@ -5,10 +5,10 @@ FROM node:4-slim
 RUN npm install express
 RUN npm install redis
 
-# Expose the needed port for the application 
-EXPOSE 80 
 # Copy the needed file into the working directory and run the application 
 COPY files/ /files/
 COPY webui.js /
 CMD ["node", "webui.js"]
 
+# Expose the needed port for the application 
+EXPOSE 8000 

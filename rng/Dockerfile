@@ -30,6 +30,7 @@ RUN     pip install -r /wheels/requirements.txt \
        && rm -rf /root/.cache/pip/* 
 
 COPY --from=builder /usr/src/app/*.py ./
-EXPOSE 80
+
 CMD ["python", "rng.py"]
 
+EXPOSE 8000

@@ -11,7 +11,7 @@ ADD hasher.rb /
 CMD ["ruby", "hasher.rb"]
 
 # Expose the needed port for the application and perform a healthcheck
-EXPOSE 80
+EXPOSE 8000
 HEALTHCHECK \
   --interval=1s --timeout=2s --retries=3 --start-period=1s \
-  CMD curl http://localhost/ || exit 1
+  CMD curl http://localhost:8000/ || exit 1
