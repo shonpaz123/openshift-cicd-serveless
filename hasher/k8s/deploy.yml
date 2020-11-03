@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: hasher
-        image: image-registry.openshift-image-registry.svc:5000/default/hasher:latest
+        image: image-registry.openshift-image-registry.svc:5000/dockercoins/hasher:latest
         ports:
         - containerPort: 80
 ---

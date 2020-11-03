@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: rng
-        image: image-registry.openshift-image-registry.svc:5000/default/webui:latest
+        image: image-registry.openshift-image-registry.svc:5000/dockercoins/webui:latest
         ports:
         - containerPort: 80
 ---
