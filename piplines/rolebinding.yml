@@ -1,12 +1,13 @@
 kind: RoleBinding
-apiVersion: rbac.authorization.k8s.io/v1
-metadata: 
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
   name: dockercoins-role-binding
-subjects: 
-- kind: ServiceAccount 
+  namespace: default
+subjects:
+- kind: ServiceAccount
   name: dockercoins
   apiGroup: ""
-roleRef: 
+roleRef:
   kind: Role
   name: dockercoins
   apiGroup: ""

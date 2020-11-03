@@ -4,7 +4,6 @@ metadata:
   namespace: default
   name: dockercoins
 rules:
-- apiGroups: ["apps"]
+- apiGroups: ["", "extensions", "apps"]
   resources: ["deployments, services"]
-  verbs: ["get", "list"]
-  resourceNames: []
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
