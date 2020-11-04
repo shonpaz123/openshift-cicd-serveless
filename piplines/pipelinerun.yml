@@ -1,0 +1,27 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  name: dockercoins-cicd-run
+spec:
+  serviceAccountName: dockercoins
+  pipelineRef:
+    name: dockercoins-cicd
+  resources:
+    - name: dockercoins-git
+      resourceRef:
+        name: dockercoins-git
+    - name: rng-image
+      resourceRef:
+        name: rng-image
+    - name: worker-image
+      resourceRef:
+        name: worker-image
+    - name: webui-image
+      resourceRef:
+        name: webui-image
+    - name: hasher-image
+      resourceRef:
+        name: hasher-image
+    - name: redis-image
+      resourceRef:
+        name: redis-image

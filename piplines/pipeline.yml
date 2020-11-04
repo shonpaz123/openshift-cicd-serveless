@@ -6,19 +6,64 @@ spec:
   resources:
     - name: dockercoins-git
       type: git
-    - name: dockercoins-image
+    - name: rng-image
+      type: image
+    - name: worker-image
+      type: image
+    - name: hasher-image
+      type: image
+    - name: webui-image
+      type: image
+    - name: redis-image
       type: image
   tasks:
-    - name: dockercoins-build
+    - name: buld-push-deploy-rng
       taskRef:
-        name: buildah 
+        name: build-rng
       resources:
-        inputs: 
-            - name: source
-              resource: dockercoins-git
+        inputs:
+        - resource: dockercoins-git
+          name: dockercoins-git
         outputs:
-            - name: image 
-              resource: dockercoins-image
-      params:
-          - name: TLSVERIFY
-            value: "false"
+        - resource: rng-image
+          name: rng-image
+    - name: buld-push-deploy-hasher
+      taskRef:
+        name: build-hasher
+      resources:
+        inputs:
+        - resource: dockercoins-git
+          name: dockercoins-git
+        outputs:
+        - resource: hasher-image
+          name: hasher-image
+    - name: buld-push-deploy-webui
+      taskRef:
+        name: build-webui
+      resources:
+        inputs:
+        - resource: dockercoins-git
+          name: dockercoins-git
+        outputs:
+        - resource: webui-image
+          name: webui-image
+    - name: buld-push-deploy-worker
+      taskRef:
+        name: build-worker
+      resources:
+        inputs:
+        - resource: dockercoins-git
+          name: dockercoins-git
+        outputs:
+        - resource: worker-image
+          name: worker-image
+    - name: buld-push-deploy-redis
+      taskRef:
+        name: deploy-redis
+      resources:
+        inputs:
+        - resource: dockercoins-git
+          name: dockercoins-git
+        outputs:
+        - resource: redis-image
+          name: redis-image
