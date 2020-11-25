@@ -3,9 +3,6 @@ kind: Service
 metadata:
   name: webui
 spec:
-  selector:
-    matchLabels:
-      app: webui
   template:
     metadata:
       labels:
